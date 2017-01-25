@@ -35,17 +35,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         String email_to = to.getText().toString().trim();
-        Email_valid(email_to);
+
         String email_subject = subject.getText().toString().trim();
         String email_message = message.getText().toString().trim();
-        if (isValidEmail(email_to)) {
+        if (!isValidEmail(email_to)) {
+            Email_valid(email_to);
+        }else{
             Intent email = new Intent(Intent.ACTION_SEND);
             email.putExtra(Intent.EXTRA_EMAIL, new String[]{email_to});
             email.putExtra(Intent.EXTRA_SUBJECT, email_subject);
             email.putExtra(Intent.EXTRA_TEXT, email_message);
             email.setType("message/rfc822");
             startActivity(Intent.createChooser(email, "Send Email Via"));
-
         }
 
 
